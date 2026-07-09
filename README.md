@@ -2,7 +2,9 @@
 
 **Real-time claim verification and evidence analysis for streaming information.**
 
-TruthStream continuously monitors incoming information streams, extracts factual claims, gathers supporting and contradicting evidence from trusted sources, and generates confidence scores with transparent explanations.
+TruthStream continuously monitors incoming information streams, extracts factual claims,
+gathers supporting and contradicting evidence from trusted sources, and generates confidence
+scores with transparent explanations.
 
 Instead of asking:
 
@@ -12,180 +14,144 @@ TruthStream asks:
 
 > "What evidence supports this claim, and how strong is that evidence?"
 
----
+## Current State
+
+TruthStream is now an MVP backend foundation. It includes:
+
+- A deterministic claim extraction pipeline.
+- A pluggable evidence retrieval interface with an in-memory demo retriever.
+- Evidence-weighted confidence scoring.
+- A FastAPI service with `/health` and `/verify` endpoints.
+- A CLI for local claim verification.
+- Automated tests for the core pipeline and API.
+
+The MVP intentionally avoids external model or search dependencies so it can run locally and in CI.
+Future implementations can replace the extractor and retriever with NLP models, search APIs,
+stream processors, and persistent storage without changing the public API contract.
 
 ## Why TruthStream?
 
 Information spreads faster than verification.
 
-News articles, social media posts, blogs, and public announcements can reach millions of people before fact-checkers have time to investigate.
+News articles, social media posts, blogs, and public announcements can reach millions of people
+before fact-checkers have time to investigate. TruthStream helps bridge this gap by providing
+automated, evidence-based verification for information as it appears.
 
-TruthStream helps bridge this gap by providing automated, evidence-based verification for information as it appears.
+## MVP Architecture
 
----
-
-## Features
-
-### Real-Time Stream Processing
-
-Monitor live information sources including:
-
-* News feeds
-* Social media streams
-* Public announcements
-* Government releases
-* Research publications
-
-### Claim Extraction
-
-Automatically identifies factual claims from incoming text using Natural Language Processing (NLP).
-
-### Evidence Retrieval
-
-Searches trusted sources for supporting and contradicting information.
-
-### Confidence Scoring
-
-Assigns a confidence score based on:
-
-* Source credibility
-* Evidence consistency
-* Number of supporting sources
-* Number of contradicting sources
-* Information recency
-
-### Explainable Results
-
-Provides transparent reasoning instead of a simple true/false label.
-
-Example:
-
-Claim:
-"Country X has banned AI systems."
-
-Result:
-
-* Confidence Score: 12%
-* Supporting Sources: 0
-* Contradicting Sources: 5
-* Status: Likely False
-
-Reason:
-No official government announcement found. Multiple trusted news organizations report no such policy.
-
-### Analytics Dashboard
-
-Visualize:
-
-* Trending claims
-* Verification status
-* Evidence graphs
-* Misinformation spikes
-* Source reliability metrics
-
----
-
-## System Architecture
-
-Incoming Stream
-↓
+```text
+Incoming Text
+    ↓
 Claim Extraction
-↓
+    ↓
 Evidence Retrieval
-↓
-Source Evaluation
-↓
+    ↓
 Confidence Scoring
-↓
+    ↓
 Explanation Generation
-↓
-Dashboard & Alerts
+    ↓
+API / CLI Output
+```
 
----
+Core modules:
 
-## Use Cases
+- `truthstream.extraction`: deterministic claim and entity extraction heuristics.
+- `truthstream.evidence`: evidence retriever protocol and in-memory demo retriever.
+- `truthstream.scoring`: source-credibility and recency weighted confidence scoring.
+- `truthstream.pipeline`: orchestration layer that composes extraction, retrieval, scoring, and explanation.
+- `truthstream.api`: FastAPI application.
+- `truthstream.cli`: command-line entrypoint.
 
-### Misinformation Detection
+## Quickstart
 
-Identify potentially misleading claims before they spread widely.
+### 1. Create a virtual environment
 
-### Journalism
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-Assist reporters with rapid claim verification.
+### 2. Install dependencies
 
-### Research
+```bash
+pip install -e '.[dev]'
+```
 
-Study information propagation and verification dynamics.
+### 3. Run tests
 
-### Public Transparency
+```bash
+pytest
+ruff check .
+```
 
-Provide evidence-based verification of public statements and announcements.
+### 4. Run the API
 
-### Open Source Intelligence (OSINT)
+```bash
+uvicorn truthstream.api:app --reload
+```
 
-Track and evaluate claims across multiple public information channels.
+Then verify text:
 
----
+```bash
+curl -X POST http://127.0.0.1:8000/verify \
+  -H 'Content-Type: application/json' \
+  -d '{"text":"Country X has banned AI systems."}'
+```
 
-## Technology Stack
+### 5. Run the CLI
 
-Frontend:
+```bash
+truthstream "Country X has banned AI systems."
+```
 
-* React
-* TypeScript
-* Tailwind CSS
+## Example API Response
 
-Backend:
+```json
+[
+  {
+    "claim": {
+      "text": "Country X has banned AI systems.",
+      "entities": ["Country X", "AI"]
+    },
+    "confidence_score": 0.0,
+    "status": "likely_false",
+    "supporting_evidence": [],
+    "contradicting_evidence": [
+      {
+        "source": {
+          "name": "Official Government Registry",
+          "url": null,
+          "credibility": 0.95
+        },
+        "title": "No nationwide AI ban has been issued",
+        "snippet": "The registry lists AI safety guidance but no blanket ban on AI systems.",
+        "stance": "contradicts",
+        "recency_score": 1.0
+      }
+    ],
+    "neutral_evidence": [],
+    "explanation": "Confidence is 0% based on 0 supporting item(s) from 0 source(s) and 2 contradicting item(s) from 2 source(s)."
+  }
+]
+```
 
-* Python
-* FastAPI
+## Long-Term Vision
 
-Data Streaming:
+TruthStream is not designed to determine absolute truth. Its goal is to provide transparent,
+evidence-based confidence assessments by continuously analyzing information from multiple
+independent sources.
 
-* Apache Kafka
-* Apache Flink
+Planned capabilities include:
 
-AI & NLP:
-
-* DeepSeek/OpenAI
-* Sentence Transformers
-* Named Entity Recognition
-* Claim Extraction Models
-
-Storage:
-
-* PostgreSQL
-* Redis
-
-Visualization:
-
-* Chart.js
-* D3.js
-
----
-
-## Future Roadmap
-
-* Multi-language verification
-* Real-time misinformation alerts
-* Knowledge graph integration
-* Cross-source contradiction detection
-* Source credibility learning system
-* Public API
-* Browser extension
-* Research paper support
-
----
-
-## Research Vision
-
-TruthStream is not designed to determine absolute truth.
-
-Its goal is to provide transparent, evidence-based confidence assessments by continuously analyzing information from multiple independent sources.
-
-The focus is on verifiability, evidence strength, and explainability rather than binary judgments.
-
----
+- Multi-language verification.
+- Real-time misinformation alerts.
+- Stream ingestion using Kafka or equivalent event queues.
+- Knowledge graph integration.
+- Cross-source contradiction detection.
+- Source credibility learning.
+- Public API and dashboard.
+- Browser extension.
+- Research paper support.
 
 ## License
 
