@@ -156,3 +156,16 @@ Planned capabilities include:
 ## License
 
 MIT License
+
+
+---
+
+## AI-maintained project notes (secondary — 2026-11-13)
+
+This section supplements the maintainer-authored README above; it does not replace or certify original claims.
+
+- The current source tree, runtime data and executed tests are the implementation source of truth. Roadmap items and draft PRs are not shipped functionality.
+- Preserve real and maintainer-provided data. Never silently substitute generated or placeholder records; clearly label and isolate synthetic fixtures.
+- Mark unverifiable sources, metrics and external claims as unknown/unverified rather than guessing.
+- Verify commands, tests and public claims against the exact current commit before using this project in a job, research or academic application.
+- See [MODEL_AUDIT_ROUTER.md](MODEL_AUDIT_ROUTER.md) for independent model review and the merge gate.
