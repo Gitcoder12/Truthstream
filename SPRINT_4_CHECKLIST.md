@@ -1,8 +1,8 @@
 # Sprint 4: Run & Stabilize — Complete Checklist
 
-**Status:** ✅ READY FOR LOCAL TESTING
+**Status:**  READY FOR LOCAL TESTING
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```bash
 # Terminal 1: Backend
@@ -22,7 +22,7 @@ npm run dev
 
 ---
 
-## ✅ Verification Checklist
+##  Verification Checklist
 
 After both servers are running, verify each feature:
 
@@ -71,7 +71,7 @@ After both servers are running, verify each feature:
 - [ ] Cards are readable and not cut off
 
 ### Source Links
-- [ ] "Open source ↗" link is clickable
+- [ ] "Open source " link is clickable
 - [ ] Opens in new tab (target="_blank")
 - [ ] Links are not broken (valid URLs)
 
@@ -151,7 +151,7 @@ After both servers are running, verify each feature:
 
 ---
 
-## 📋 Backend Tests
+##  Backend Tests
 
 ```bash
 pytest -v
@@ -171,12 +171,12 @@ test_openalex_provider_maps_work_metadata PASSED
 test_cached_provider_reuses_claim_response PASSED
 test_composite_retriever_keeps_working_when_provider_fails PASSED
 
-✅ 11 passed
+ 11 passed
 ```
 
 ---
 
-## 🔧 Troubleshooting
+##  Troubleshooting
 
 ### Frontend won't start
 ```bash
@@ -220,7 +220,7 @@ npm run build  # Shows all errors
 
 ---
 
-## 📊 Test Examples
+##  Test Examples
 
 ### Claim 1: AI Ban (Contradicted)
 ```
@@ -248,35 +248,35 @@ Expected Evidence: Supporting evidence
 
 ---
 
-## 🎯 Definition of Done
+##  Definition of Done
 
-✅ All 11 verification checklist items pass
-✅ All 11 backend tests pass
-✅ Zero console errors or warnings
-✅ All responsive breakpoints verified
-✅ Settings/history/dark mode persist correctly
-✅ API integration works seamlessly
-✅ Error handling graceful
-✅ Documentation updated
+ All 11 verification checklist items pass
+ All 11 backend tests pass
+ Zero console errors or warnings
+ All responsive breakpoints verified
+ Settings/history/dark mode persist correctly
+ API integration works seamlessly
+ Error handling graceful
+ Documentation updated
 
 **Result:** Fully functional, production-ready MVP ready for deployment.
 
 ---
 
-## 📝 Next Steps
+##  Next Steps
 
-1. ✅ **This Sprint:** Verify all checklist items locally
-2. 🎯 **Next Sprint:** Deploy to staging environment
-3. 🚀 **Production:** Public API + analytics
-4. 📈 **Scale:** Add persistent database, user auth, more providers
+1.  **This Sprint:** Verify all checklist items locally
+2.  **Next Sprint:** Deploy to staging environment
+3.  **Production:** Public API + analytics
+4.  **Scale:** Add persistent database, user auth, more providers
 
 ---
 
-## ✨ Completion
+##  Completion
 
 Once all checklist items pass:
 
 1. Create pull request to merge `sprint-4-run-stabilize` → `main`
 2. Document any findings in PR description
 3. Tag version as `0.1.0-rc1` (Release Candidate 1)
-4. Ship! 🚀
+4. Ship! 
