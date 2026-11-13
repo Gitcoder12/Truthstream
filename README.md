@@ -16,15 +16,13 @@ TruthStream asks:
 
 ## Current State
 
-TruthStream is now an MVP product foundation. It includes:
+TruthStream is now an MVP backend foundation. It includes:
 
 - A deterministic claim extraction pipeline.
-- A pluggable evidence retrieval interface with demo and real provider modes.
-- Real evidence providers for Wikipedia, Crossref, and OpenAlex with in-memory request caching.
-- Evidence-weighted confidence scoring with structured evidence summaries.
-- A FastAPI service with `/health`, `/verify`, and `/verify/batch` endpoints.
-- A CLI for local claim verification with JSON, stdin, and pretty-print output modes.
-- A React + TypeScript + Tailwind frontend with Home, Verify, History, About, and Settings pages.
+- A pluggable evidence retrieval interface with an in-memory demo retriever.
+- Evidence-weighted confidence scoring.
+- A FastAPI service with `/health` and `/verify` endpoints.
+- A CLI for local claim verification.
 - Automated tests for the core pipeline and API.
 
 The MVP intentionally avoids external model or search dependencies so it can run locally and in CI.
@@ -58,9 +56,7 @@ API / CLI Output
 Core modules:
 
 - `truthstream.extraction`: deterministic claim and entity extraction heuristics.
-- `truthstream.evidence`: retriever protocols, composite retrieval, and demo fallback retriever.
-- `truthstream.providers`: cached Wikipedia, Crossref, and OpenAlex provider integrations.
-- `truthstream.settings`: runtime selection for demo or real evidence modes.
+- `truthstream.evidence`: evidence retriever protocol and in-memory demo retriever.
 - `truthstream.scoring`: source-credibility and recency weighted confidence scoring.
 - `truthstream.pipeline`: orchestration layer that composes extraction, retrieval, scoring, and explanation.
 - `truthstream.api`: FastAPI application.
@@ -94,13 +90,6 @@ ruff check .
 uvicorn truthstream.api:app --reload
 ```
 
-By default the API uses deterministic demo evidence for offline development. To enable real
-Wikipedia, Crossref, and OpenAlex providers, set:
-
-```bash
-TRUTHSTREAM_EVIDENCE_MODE=real uvicorn truthstream.api:app --reload
-```
-
 Then verify text:
 
 ```bash
@@ -109,54 +98,11 @@ curl -X POST http://127.0.0.1:8000/verify \
   -d '{"text":"Country X has banned AI systems."}'
 ```
 
-Batch verification is also available:
-
-```bash
-curl -X POST http://127.0.0.1:8000/verify/batch \
-  -H 'Content-Type: application/json' \
-  -d '[{"text":"Country X has banned AI systems."},{"text":"The moon has a new public library."}]'
-```
-
-### 5. Run the frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open http://127.0.0.1:5173. The Vite dev server proxies `/api` requests to the FastAPI backend by default.
-
-### 6. Run the CLI
+### 5. Run the CLI
 
 ```bash
 truthstream "Country X has banned AI systems."
-truthstream --pretty "Country X has banned AI systems."
-truthstream --evidence real --pretty "Recent research on multilingual misinformation is rising."
-echo "Country X has banned AI systems." | truthstream --pretty
 ```
-
-## Frontend
-
-The frontend lives in `frontend/` and is built with React, TypeScript, Vite, and Tailwind CSS.
-It connects to the existing backend API instead of replacing it. The Verify page posts claims to
-`/verify`, displays loading and error states, renders a confidence meter, separates supporting,
-contradicting, and neutral evidence, links to sources, and stores optional local history.
-
-## Evidence Provider System
-
-TruthStream now separates retrieval orchestration from source-specific integrations:
-
-- `EvidenceProvider` defines the provider contract.
-- `CachedEvidenceProvider` adds TTL caching around any provider.
-- `CompositeEvidenceRetriever` queries multiple providers and keeps working if one provider fails.
-- `WikipediaEvidenceProvider` retrieves encyclopedia search results.
-- `CrossrefEvidenceProvider` retrieves scholarly work metadata.
-- `OpenAlexEvidenceProvider` retrieves open scholarly graph results.
-
-Remote provider evidence is returned as neutral evidence candidates. This keeps retrieval
-deterministic and leaves support/contradiction classification to the verification/ranking layer.
-The original in-memory retriever remains available for tests, demos, and offline development.
 
 ## Example API Response
 
@@ -184,14 +130,7 @@ The original in-memory retriever remains available for tests, demos, and offline
       }
     ],
     "neutral_evidence": [],
-    "explanation": "Confidence is 0% with stronger contradicting evidence, based on 0 supporting item(s) from 0 source(s) and 2 contradicting item(s) from 2 source(s).",
-    "evidence_summary": {
-      "supporting_count": 0,
-      "contradicting_count": 2,
-      "neutral_count": 0,
-      "supporting_weight": 0,
-      "contradicting_weight": 1.724
-    }
+    "explanation": "Confidence is 0% based on 0 supporting item(s) from 0 source(s) and 2 contradicting item(s) from 2 source(s)."
   }
 ]
 ```
@@ -217,3 +156,21 @@ Planned capabilities include:
 ## License
 
 MIT License
+
+
+---
+
+## AI-maintained project notes (secondary — 2026-11-13)
+
+This section supplements the maintainer-authored README above; it does not replace or certify original claims.
+
+- The current source tree, runtime data and executed tests are the implementation source of truth. Roadmap items and draft PRs are not shipped functionality.
+- Preserve real and maintainer-provided data. Never silently substitute generated or placeholder records; clearly label and isolate synthetic fixtures.
+- Mark unverifiable sources, metrics and external claims as unknown/unverified rather than guessing.
+- Verify commands, tests and public claims against the exact current commit before using this project in a job, research or academic application.
+- See [MODEL_AUDIT_ROUTER.md](MODEL_AUDIT_ROUTER.md) for independent model review and the merge gate.
+
+
+### Proposed provider and frontend work — open PR, not yet merged (2026-11-13)
+
+[PR #2](https://github.com/Gitcoder12/Truthstream/pull/2) proposes Wikipedia, Crossref and OpenAlex provider adapters, batch verification, and a React/TypeScript frontend. Treat these as proposed until the PR is reviewed, merged and tested at its exact final head. The branch describes its default mode as demo evidence and its real-provider mode as optional. The example response includes an “Official Government Registry” with a null URL; that is illustrative placeholder content, not an actual source or verification record. Never present it as real evidence. Every production evidence item must carry a resolvable source URL, retrieval timestamp and provenance.
