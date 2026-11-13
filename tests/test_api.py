@@ -27,3 +27,23 @@ def test_verify_endpoint() -> None:
     body = response.json()
     assert body[0]["claim"]["text"] == "Country X has banned AI systems."
     assert body[0]["status"] == "likely_false"
+
+
+def test_verify_endpoint_rejects_missing_text() -> None:
+    from fastapi.testclient import TestClient
+
+    from truthstream.api import app
+
+    response = TestClient(app).post("/verify", json={"source": "test"})
+
+    assert response.status_code == 422
+
+
+def test_verify_endpoint_rejects_blank_text() -> None:
+    from fastapi.testclient import TestClient
+
+    from truthstream.api import app
+
+    response = TestClient(app).post("/verify", json={"text": "   "})
+
+    assert response.status_code == 422
