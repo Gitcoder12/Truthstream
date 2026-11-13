@@ -169,3 +169,8 @@ This section supplements the maintainer-authored README above; it does not repla
 - Mark unverifiable sources, metrics and external claims as unknown/unverified rather than guessing.
 - Verify commands, tests and public claims against the exact current commit before using this project in a job, research or academic application.
 - See [MODEL_AUDIT_ROUTER.md](MODEL_AUDIT_ROUTER.md) for independent model review and the merge gate.
+
+
+### Proposed provider and frontend work — open PR, not yet merged (2026-11-13)
+
+[PR #2](https://github.com/Gitcoder12/Truthstream/pull/2) proposes Wikipedia, Crossref and OpenAlex provider adapters, batch verification, and a React/TypeScript frontend. Treat these as proposed until the PR is reviewed, merged and tested at its exact final head. The branch describes its default mode as demo evidence and its real-provider mode as optional. The example response includes an “Official Government Registry” with a null URL; that is illustrative placeholder content, not an actual source or verification record. Never present it as real evidence. Every production evidence item must carry a resolvable source URL, retrieval timestamp and provenance.
