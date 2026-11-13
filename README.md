@@ -168,3 +168,15 @@ MIT License
 - [README quality checklist](README_QUALITY_CHECKLIST.md)
 - [Contributing](CONTRIBUTING.md)
 - [Agent instructions](AGENTS.md) · [Agent skills](SKILLS.md)
+
+## Understanding the project
+
+### In plain language
+
+A tool that takes a claim, finds evidence for and against it, and explains how strong that evidence is.
+
+### Technical and research view
+
+MVP backend foundation with deterministic claim extraction, a pluggable evidence-retrieval interface, an in-memory demo retriever, evidence-weighted confidence scoring, FastAPI /health and /verify endpoints, CLI and automated tests. Demo retrieval is not proof of real-time or comprehensive fact-checking.
+
+For future work, see [FEATURE_UPGRADE_PLAN.md](FEATURE_UPGRADE_PLAN.md), [ACTIVITY_LOG.md](ACTIVITY_LOG.md), [COMPANY_FIT.md](COMPANY_FIT.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
