@@ -5,14 +5,14 @@
 ## Philosophy
 
 AI agents need clear, autonomous boundaries. Instead of:
-- ❌ Asking permission after every step
-- ❌ Over-explaining decisions
-- ❌ Waiting for confirmation
+-  Asking permission after every step
+-  Over-explaining decisions
+-  Waiting for confirmation
 
 Use:
-- ✅ Autonomous execution
-- ✅ Clear stop conditions
-- ✅ Focused objectives
+-  Autonomous execution
+-  Clear stop conditions
+-  Focused objectives
 
 One sentence enables this:
 > **Be proactive. Execute the next logical step without asking for confirmation unless blocked by missing information, permissions, or a potentially destructive action.**
@@ -193,7 +193,7 @@ Always:
 
 ## Common Mistakes
 
-### ❌ Too Many Prompts
+###  Too Many Prompts
 "I'll create specialized prompts for:
 - API design
 - Frontend development
@@ -205,7 +205,7 @@ Always:
 
 **Fix:** Stick to three prompts. Customize them in the task description.
 
-### ❌ Asking for Permission Too Much
+###  Asking for Permission Too Much
 "Should I...?"
 "Do you want me to...?"
 "Shall I...?"
@@ -214,14 +214,14 @@ Always:
 
 **Fix:** Be proactive. Say "I'm going to..." and do it. Only pause on blockers.
 
-### ❌ Rewriting Working Code
+###  Rewriting Working Code
 Improving an existing project and rewriting half the codebase.
 
 **Result:** Introduces new bugs, breaks production, violates "preserve architecture."
 
 **Fix:** Make small, incremental changes. Refactor only when necessary.
 
-### ❌ Ignoring the MVP Phase
+###  Ignoring the MVP Phase
 "Let me build the perfect production system on day one."
 
 **Result:** Over-engineered, slow to ship, hard to validate.
@@ -302,11 +302,11 @@ Continue until all issues resolved or blocked.
 
 Using PromptOS:
 
-- ✅ **Speed:** Less context switching, faster execution
-- ✅ **Clarity:** Clear objectives, clear stop conditions
-- ✅ **Reusability:** Works across all projects and teams
-- ✅ **Simplicity:** Just three prompts, not a hundred
-- ✅ **Scalability:** Team members understand the system immediately
-- ✅ **Compounding Returns:** The more you use it, the more natural it becomes
+-  **Speed:** Less context switching, faster execution
+-  **Clarity:** Clear objectives, clear stop conditions
+-  **Reusability:** Works across all projects and teams
+-  **Simplicity:** Just three prompts, not a hundred
+-  **Scalability:** Team members understand the system immediately
+-  **Compounding Returns:** The more you use it, the more natural it becomes
 
-**One investment. Decades of use.** 🚀
+**One investment. Decades of use.** 
