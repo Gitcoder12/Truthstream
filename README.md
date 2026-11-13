@@ -157,26 +157,15 @@ Planned capabilities include:
 
 MIT License
 
+
 ---
 
-## Project handbook
+## AI-maintained project notes (secondary — 2026-11-13)
 
-- [Activity log](ACTIVITY_LOG.md)
-- [Feature upgrade plan](FEATURE_UPGRADE_PLAN.md)
-- [Company and team fit](COMPANY_FIT.md)
-- [Beginner and technical README draft](README_ADDENDUM_DRAFT.md)
-- [README quality checklist](README_QUALITY_CHECKLIST.md)
-- [Contributing](CONTRIBUTING.md)
-- [Agent instructions](AGENTS.md) · [Agent skills](SKILLS.md)
+This section supplements the maintainer-authored README above; it does not replace or certify original claims.
 
-## Understanding the project
-
-### In plain language
-
-A tool that takes a claim, finds evidence for and against it, and explains how strong that evidence is.
-
-### Technical and research view
-
-MVP backend foundation with deterministic claim extraction, a pluggable evidence-retrieval interface, an in-memory demo retriever, evidence-weighted confidence scoring, FastAPI /health and /verify endpoints, CLI and automated tests. Demo retrieval is not proof of real-time or comprehensive fact-checking.
-
-For future work, see [FEATURE_UPGRADE_PLAN.md](FEATURE_UPGRADE_PLAN.md), [ACTIVITY_LOG.md](ACTIVITY_LOG.md), [COMPANY_FIT.md](COMPANY_FIT.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
+- The current source tree, runtime data and executed tests are the implementation source of truth. Roadmap items and draft PRs are not shipped functionality.
+- Preserve real and maintainer-provided data. Never silently substitute generated or placeholder records; clearly label and isolate synthetic fixtures.
+- Mark unverifiable sources, metrics and external claims as unknown/unverified rather than guessing.
+- Verify commands, tests and public claims against the exact current commit before using this project in a job, research or academic application.
+- See [MODEL_AUDIT_ROUTER.md](MODEL_AUDIT_ROUTER.md) for independent model review and the merge gate.
