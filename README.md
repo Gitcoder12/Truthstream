@@ -174,3 +174,22 @@ This section supplements the maintainer-authored README above; it does not repla
 ### Proposed provider and frontend work — open PR, not yet merged (2026-11-13)
 
 [PR #2](https://github.com/Gitcoder12/Truthstream/pull/2) proposes Wikipedia, Crossref and OpenAlex provider adapters, batch verification, and a React/TypeScript frontend. Treat these as proposed until the PR is reviewed, merged and tested at its exact final head. The branch describes its default mode as demo evidence and its real-provider mode as optional. The example response includes an “Official Government Registry” with a null URL; that is illustrative placeholder content, not an actual source or verification record. Never present it as real evidence. Every production evidence item must carry a resolvable source URL, retrieval timestamp and provenance.
+
+---
+
+## Engineering Audit & Handover — 2026-11-17
+
+**Review scope:** default branch `main`; static inspection of `src/truthstream/api.py`, `pipeline.py`, `evidence.py`, `scoring.py`, and `tests/test_api.py`. Tests were not executed.
+
+### Confirmed findings
+- The default `VerificationPipeline` uses `InMemoryEvidenceRetriever`, whose evidence is a small hardcoded demo dataset. It does not retrieve current evidence from the web or authoritative live sources.
+- Evidence retrieval is keyword-overlap matching, and confidence is a weighted ratio based on configured credibility and recency values. This is an MVP heuristic, not a validated fact-checking or truth-detection system.
+- The API tests assert a specific canned claim result using the demo evidence. Passing those tests would establish deterministic demo behavior, not real-world verification accuracy.
+- Request text is validated as non-empty/non-whitespace, which is a useful existing safeguard.
+
+### Next actions
+1. Label outputs as demo/heuristic until connected to sourced, timestamped evidence retrieval.
+2. Add provenance, source URLs, retrieval timestamps, evidence deduplication, and a reviewable explanation for every result.
+3. Evaluate on a documented benchmark with human-labelled claims; report precision, recall, calibration, and abstention behavior.
+
+**Verification status:** static source/test inspection only; `pytest`, API runtime, and any external-source integration were not run or verified.
