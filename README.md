@@ -193,3 +193,34 @@ This section supplements the maintainer-authored README above; it does not repla
 3. Evaluate on a documented benchmark with human-labelled claims; report precision, recall, calibration, and abstention behavior.
 
 **Verification status:** static source/test inspection only; `pytest`, API runtime, and any external-source integration were not run or verified.
+
+
+---
+
+## Branch Activity & Development History
+
+**Audit date:** 2026-11-18 · **Comparison base:** `main`
+
+| Branch | Difference from `main` | Observed work / changed paths |
+|---|---:|---|
+| `ai-upgrade-2026-11-13` | 2 ahead / 4 behind | Prompt and Sprint 4 checklist revisions |
+| `chore/remove-emoji-glyphs-2026-11-13` | 6 / 4 | Prompt and Sprint 4 checklist glyph cleanup |
+| `codex/establish-project-workflow-guidelines` | 0 / 7 | No unique commits relative to current `main`; branch is behind |
+| `codex/establish-project-workflow-guidelines-l37ven` | 2 / 8 | Large backend + React frontend implementation, API, evidence extraction/scoring, provider adapters and tests; README also changed substantially |
+| `copilot/productionize/Truthstream-audit` | 0 / 5 | No unique commits relative to current `main`; branch is behind |
+| `docs/portfolio-operating-kit-2026-11-13` | 5 / 4 | Activity log, agent/workflow docs, worklog, company-fit notes, feature plan and skills |
+| `docs/project-status-2026-11-16-truthstream` | 1 / 1 | Project status snapshot: `PROJECT_STATUS.md` |
+| `docs/status-inventory-2026-11-16-v1` | 1 / 1 | Project status inventory: `PROJECT_STATUS.md` |
+| `fix/api-validation-and-ci` | 4 / 5 | CI workflow, API validation, worklog and API tests |
+| `sprint-4-run-stabilize` | 1 / 8 | Large backend + React frontend implementation, API, evidence extraction/scoring, provider adapters and tests; README also changed substantially |
+
+### Open pull requests observed during this audit
+
+- [PR #8 — project status snapshot](https://github.com/Gitcoder12/Truthstream/pull/8)
+- [PR #7 — project handbook and agent contribution guide](https://github.com/Gitcoder12/Truthstream/pull/7)
+- [PR #6 — remove emoji glyphs](https://github.com/Gitcoder12/Truthstream/pull/6)
+- [PR #2 — Truthstream MVP implementation](https://github.com/Gitcoder12/Truthstream/pull/2)
+
+**Review note:** The two large implementation branches change README content substantially and appear to contain overlapping frontend/backend work. Compare exact commits and run backend/frontend tests before choosing a branch or merging. No branches have been merged or deleted by this documentation update.
+
+**Verification boundary:** Git metadata and changed paths only; this section does not certify runtime behavior, provider correctness or test success.
