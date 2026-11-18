@@ -193,3 +193,10 @@ This section supplements the maintainer-authored README above; it does not repla
 3. Evaluate on a documented benchmark with human-labelled claims; report precision, recall, calibration, and abstention behavior.
 
 **Verification status:** static source/test inspection only; `pytest`, API runtime, and any external-source integration were not run or verified.
+
+---
+
+## Examples Used
+- Verifying a public claim against supporting and contradicting evidence
+- Checking a breaking-news statement against official records
+- Comparing source credibility and evidence recency
