@@ -200,3 +200,27 @@ This section supplements the maintainer-authored README above; it does not repla
 - Verifying a public claim against supporting and contradicting evidence
 - Checking a breaking-news statement against official records
 - Comparing source credibility and evidence recency
+
+
+---
+
+## Comparison with Existing Open-Source Projects and Research
+
+TruthStream is documented as an evidence-first claim-verification pipeline that extracts claims, retrieves supporting and contradicting material, and produces an explainable confidence assessment. These projects and datasets are relevant fact-checking references, but they do not establish that TruthStream has equivalent accuracy or coverage.
+
+| Project / resource | Established focus | Relationship to TruthStream |
+|---|---|---|
+| [ClaimBuster Spotter](https://github.com/utaresearch/claimbuster-spotter) | Identifies check-worthy claims in text | Focuses on claim spotting; TruthStream's stated pipeline continues into evidence retrieval and evidence-weighted assessment. |
+| [DeFactoNLP](https://github.com/DeFacto/DeFactoNLP) | NLP methods for fact-checking and evidence-oriented analysis | A research-oriented fact-checking reference; compare specific supported tasks and datasets before asserting feature parity. |
+| [FEVER dataset](https://github.com/sheffieldnlp/fever) | Benchmark dataset for evidence-based fact verification | An evaluation resource rather than a complete verification service; useful for designing reproducible tests of evidence retrieval and stance classification. |
+
+### Where TruthStream is different
+- **Composable pipeline:** the documented MVP separates extraction, retrieval, scoring, orchestration and explanation behind replaceable interfaces.
+- **Evidence polarity:** the output model distinguishes supporting, contradicting and neutral evidence instead of returning only a binary verdict.
+- **Local deterministic MVP:** the current version avoids external model/search dependencies, making the initial core reproducible and testable.
+
+### Where established projects are stronger
+ClaimBuster and fact-checking research systems have domain-specific methods and evaluation context; FEVER provides labelled evidence-verification examples. TruthStream's current retriever is an in-memory demo and its extractor is deterministic/heuristic, so the MVP does not yet establish live evidence coverage or factual accuracy.
+
+### Evaluation and limitations
+Evaluate claim extraction, evidence recall, evidence precision, stance classification, calibration and abstention separately. Preserve source URLs, publication dates and retrieval timestamps. A confidence score is conditional on retrieved evidence and scoring assumptions; it is not a probability of absolute truth. This is a research-scope comparison, not an accuracy ranking.
