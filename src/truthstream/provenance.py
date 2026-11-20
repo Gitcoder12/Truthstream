@@ -6,8 +6,8 @@ URLs, retrieval timestamps, and stable evidence identifiers for every cited item
 from __future__ import annotations
 
 from datetime import datetime
-from urllib.parse import urlparse
 from typing import Any
+from urllib.parse import urlparse
 
 
 def is_source_backed_evidence(item: dict[str, Any]) -> bool:
