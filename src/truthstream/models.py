@@ -44,6 +44,8 @@ class Evidence:
     snippet: str
     stance: EvidenceStance
     recency_score: float = 1.0
+    evidence_id: str | None = None
+    retrieved_at: str | None = None
 
     def __post_init__(self) -> None:
         self.stance = EvidenceStance(self.stance)
@@ -89,7 +91,11 @@ class VerificationResult:
     def to_dict(self) -> dict[str, object]:
         """Return a JSON-serializable representation."""
 
-        return asdict(self)
+        payload = asdict(self)
+        from truthstream.provenance import provenance_summary
+
+        payload["provenance"] = provenance_summary(payload)
+        return payload
 
 
 def _validate_range(field_name: str, value: float) -> None:
