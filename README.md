@@ -90,6 +90,8 @@ ruff check .
 uvicorn truthstream.api:app --reload
 ```
 
+Open **http://127.0.0.1:8000/docs** in your browser for the interactive FastAPI documentation, or **http://127.0.0.1:8000/health** to check the service. Keep the terminal running while using the API; press **Ctrl+C** to stop it.
+
 Then verify text:
 
 ```bash
