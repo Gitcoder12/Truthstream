@@ -25,10 +25,10 @@ def is_source_backed_evidence(item: dict[str, Any]) -> bool:
     if not isinstance(retrieved_at, str) or not retrieved_at.strip():
         return False
     try:
-        datetime.fromisoformat(retrieved_at.replace("Z", "+00:00"))
+        timestamp = datetime.fromisoformat(retrieved_at.replace("Z", "+00:00"))
     except ValueError:
         return False
-    return True
+    return timestamp.tzinfo is not None and timestamp.utcoffset() is not None
 
 
 def provenance_summary(result: dict[str, Any]) -> dict[str, Any]:
